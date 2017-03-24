@@ -1,9 +1,10 @@
 // the wrapper for everything
+// Name this something like TodoApp
 var HelloWorld = React.createClass({
   
   getInitialState: function() {
     return {
-      h1Text: 'To Do:',
+      h1Text: 'To Do:', // No need to make this state if you don't modify it
       tasks: [],
       status: 'all'
     };
@@ -32,7 +33,7 @@ var HelloWorld = React.createClass({
     var newStatus;
     console.log(temp, data);
     var i = this.findIndexById(temp, data);
-    if (temp[i].status == "active") {
+    if (temp[i].status === "active") {
       newStatus = "completed";
     } else {
       newStatus = "active";
@@ -72,21 +73,21 @@ var HelloWorld = React.createClass({
   },
 
   componentDidMount: function() {
+    // Make sure to indent only once
     $.ajax({
-              url: '/home/',
-              dataType: 'json',
-              cache: false,
-              type: 'GET',
-              success: function(data) {
-          //data from res.json in routes/index.js is {text: "HelloWorld"}, so we want to access the text field of data
-                  this.setState({
-                      tasks: data.todos
-                  });
-              }.bind(this),
-              failure: function(xhr, status, err) {
-                  console.error('GET /home', status, err.toString());
-              }.bind(this)
+      url: '/home/',
+      dataType: 'json',
+      cache: false,
+      type: 'GET',
+      success: function(data) {
+          this.setState({
+              tasks: data.todos
           });
+      }.bind(this),
+      failure: function(xhr, status, err) {
+          console.error('GET /home', status, err.toString());
+      }.bind(this)
+    });
   },
 
   render: function() {
@@ -113,13 +114,13 @@ var TaskList = React.createClass({
     };
   },
   onError: function(xhr, status, err) {
-    console.error('GET /home', status, err.toString());
+    console.error('TaskList Error', status, err.toString()); 
   },
   changeStatus: function(event) {
     event.preventDefault();
     var newStatus;
 
-    if (event.target.value == "active") {
+    if (event.target.value === "active") {
       newStatus = "completed";
     } else {
       newStatus = "active";
@@ -164,58 +165,69 @@ var TaskList = React.createClass({
       .error(this.onError);
   },
 	render: function() {
+    // All these variables below aren't necessary, you can just reference this.changeStatus
+    // whenever you need it, instead of saving it to the changeStatus local variable.
     var changeStatus = this.changeStatus;
     var removeTask = this.removeTask;
     var editTask = this.editTask;
     var submitEdit = this.submitEdit;
-    var updateTextField = this.updateTextField;
+    var updateTextField = this.updateTextField; // This isn't used, delete it
     var status = this.props.status;
+    // The map function below replaces a task with undefined if it's not in the current status filter.
+    // The functionality works because React interprets undefined components as blank, but this
+    // is bad coding practices.  Use Array.filter() to filter out the unshown tasks and then use
+    // Array.map() to map each task to a <li>...</li> component.
     var listItems = this.props.tasks.map(function(task) {
-      if (status == 'all') {
-        return <li key={task._id} id={'t' + task._id}>
-          <input
-            type="button"
-            className="status-button"
-            value={task.status}
-            id={'s' + task._id}
-            onClick={changeStatus}
-          />
-          <div onDoubleClick={editTask}>{task.task}</div>
-          <form onSubmit={submitEdit} className="edit" style={{display:'none'}}>
-            <input type="text" name="edit-text"/>
-            <input type="submit" value="edit"/>'
-          </form>
-          <input
-            type="button"
-            className="delete-button"
-            value="delete"
-            id={'d' + task._id}
-            onClick={removeTask}
-          />
-        </li>;
+      if (status === 'all') {
+        return ( // Use parentheses with multi-line return statements like these
+          <li key={task._id} id={'t' + task._id}>
+            <input
+              type="button"
+              className="status-button"
+              value={task.status}
+              id={'s' + task._id}
+              onClick={changeStatus}
+            />
+            <div onDoubleClick={editTask}>{task.task}</div>
+            <form onSubmit={submitEdit} className="edit" style={{display:'none'}}>
+              <input type="text" name="edit-text"/>
+              <input type="submit" value="edit"/>'
+            </form>
+            <input
+              type="button"
+              className="delete-button"
+              value="delete"
+              id={'d' + task._id}
+              onClick={removeTask}
+            />
+          </li>
+        );
       } else {
-        if (status == task.status) {
-          return <li key={task._id} id={'t' + task._id}>
-          <input
-            type="button"
-            className="status-button"
-            value={task.status}
-            id={'s' + task._id}
-            onClick={changeStatus}
-          />
-          <div onDoubleClick={editTask}>{task.task}</div>
-          <form onSubmit={submitEdit} className="edit" style={{display:'none'}}>
-            <input type="text" name="edit-text"/>
-            <input type="submit" value="edit"/>'
-          </form>
-          <input
-            type="button"
-            className="delete-button"
-            value="delete"
-            id={'d' + task._id}
-            onClick={removeTask}
-          />
-        </li>;
+        if (status === task.status) {
+          return (
+            // Try not to repeat code!  Save all this in a variable and use it twice.
+            <li key={task._id} id={'t' + task._id}>
+              <input
+                type="button"
+                className="status-button"
+                value={task.status}
+                id={'s' + task._id}
+                onClick={changeStatus}
+              />
+              <div onDoubleClick={editTask}>{task.task}</div>
+              <form onSubmit={submitEdit} className="edit" style={{display:'none'}}>
+                <input type="text" name="edit-text"/>
+                <input type="submit" value="edit"/>'
+              </form>
+              <input
+                type="button"
+                className="delete-button"
+                value="delete"
+                id={'d' + task._id}
+                onClick={removeTask}
+              />
+            </li>
+          );
         }
       };
     });
@@ -242,8 +254,9 @@ var AddTask = React.createClass({
     });
   },
   onError: function(xhr, status, err) {
-    console.error('GET /home', status, err.toString());
+    console.error('POST /add', status, err.toString());
   },
+  // You don't use this function:
   onSuccess: function(data) {
     console.log("put something here!")
   },
@@ -259,6 +272,7 @@ var AddTask = React.createClass({
       newTask: ''
     })
 
+    // It's a good idea to remove log statements after you're done with the relevant feature
     console.log("formData", formData);
     $.post("/add/", formData)
       .done(this.props.add)
