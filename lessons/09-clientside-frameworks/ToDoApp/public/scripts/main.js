@@ -33,7 +33,7 @@ var HelloWorld = React.createClass({
     var newStatus;
     console.log(temp, data);
     var i = this.findIndexById(temp, data);
-    if (temp[i].status == "active") {
+    if (temp[i].status === "active") {
       newStatus = "completed";
     } else {
       newStatus = "active";
@@ -120,7 +120,7 @@ var TaskList = React.createClass({
     event.preventDefault();
     var newStatus;
 
-    if (event.target.value == "active") {
+    if (event.target.value === "active") {
       newStatus = "completed";
     } else {
       newStatus = "active";
@@ -178,7 +178,7 @@ var TaskList = React.createClass({
     // is bad coding practices.  Use Array.filter() to filter out the unshown tasks and then use
     // Array.map() to map each task to a <li>...</li> component.
     var listItems = this.props.tasks.map(function(task) {
-      if (status == 'all') {
+      if (status === 'all') {
         return ( // Use parentheses with multi-line return statements like these
           <li key={task._id} id={'t' + task._id}>
             <input
@@ -203,7 +203,7 @@ var TaskList = React.createClass({
           </li>
         );
       } else {
-        if (status == task.status) {
+        if (status === task.status) {
           return (
             // Try not to repeat code!  Save all this in a variable and use it twice.
             <li key={task._id} id={'t' + task._id}>
