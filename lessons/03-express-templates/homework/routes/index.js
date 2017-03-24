@@ -78,7 +78,7 @@ function catsByColor(color, catList) {
 
 // function returns the index of the oldest cat in the database
 function indexOfOldest(catList) {
-	if (catList.length = 0) {
+	if (catList.length = 0) {		// should have a second equal sign in this if statement, what is actually happening here is catList.length is being assigned to 0 - Z
 		return -1
 	}
 	else {
@@ -89,7 +89,7 @@ function indexOfOldest(catList) {
 				oldest = catList[i].age;
 				index = i;
 			}
-		return index;
+		return index;	// this return statement is happening inside the loop which means you iterate through the first element, and then return immediately, should have been outside the loop - Z 
 		}
 	}
 }
