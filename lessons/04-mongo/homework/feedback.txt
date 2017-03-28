@@ -1,0 +1,13 @@
+Do not merge this pull request! It is just for me to add my feedback on your Cat App with Mongoose.
+
+Homework Feedback for Cat App with Mongoose:
+
+Functionality:
+ - Completion: All of your features work. Your advanced query is really cool! I had a fun time testing it. (20/20)
+ - Bug Free: I didn't find any bugs while testing your app. (10/10)
+
+Quality:
+ - Good Coding Practices: I liked your organization of index.js in putting all of your helper functions at the top and then creating a routes object that you export. It makes your app.js very clean and makes testing your routes very easy. I would like to see you try to clean up your code slightly. You made these very nice helper functions like chooseName() and chooseColors() that you then call in your /cats/new route and store as variables as opposed to just calling these helper functions when you create the Cat object. I also think your .find() Mongoose operations are slightly messier than they need to be. For example, you could just use .findOneAndRemove() for removing the oldest cat and chain sort after the find operation executes. Overall though, great job!(9/10)
+ - Readability: Functions and variable names are appropriate and comments are good. Breaking up your code into smaller helper functions was a great benefit for readability. And again, I would remove the files you don't actually use in the application like the public/images/cat.jpg file.(10/10)
+
+Nice work!
