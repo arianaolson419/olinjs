@@ -1,3 +1,5 @@
+// You can also separate this file into different components too, and then just link them in the script of your html. Also, have more function specific comments so that you know what is going on when you reread your code.
+
 // login variables
 var $facebookLoginForm = $('#facebook-login');
 var $localLoginForm = $('#local-login');
@@ -18,9 +20,10 @@ var onError = function(data, status) {
 }
 
 var onLogin = function(data, status) {
+  console.log(data);
   window.location = data;
 }
- 
+
 var onDeleteTwote = function(data) {
   console.log('delete Twote!!!!!!', data)
   var $target = $(data.target); // the checkbox
@@ -83,34 +86,35 @@ $newTwoteForm.submit(function (event) {
     .error(onError);
 });
 
-$localLoginForm.submit(function (event) {
-  event.preventDefault();
+// The package that you are using for local strategy + mongoose + express handles all of the form through the action of the form
+// $localLoginForm.submit(function (event) {
+//   event.preventDefault();
+//
+//   var username = $localLoginForm.find('[name="username"]').val();
+//   var password = $localLoginForm.find('[name="password"]').val();
+//
+//   var formData = {
+//     username: username,
+//     password: password
+//   }
+//
+//   $.post('/login', formData)
+//     .done(onLogin)
+//     .error(onError);
+// });
 
-  var username = $localLoginForm.find('[name="username"]').val();
-  var password = $localLoginForm.find('[name="password"]').val();
-
-  var formData = {
-    username: username,
-    password: password
-  }
-
-  $.post('/login', formData)
-    .done(onLogin)
-    .error(onError);
-});
-
-$registerForm.submit(function (event) {
-  event.preventDefault();
-
-  var username = $registerForm.find('[name="username"]').val();
-  var password = $registerForm.find('[name="password"]').val();
-
-  var formData = {
-    username: username,
-    password: password
-  }
-
-  $.post('/register', formData)
-    .done(onLogin)
-    .error(onError);
-})
+// $registerForm.submit(function (event) {
+//   event.preventDefault();
+//
+//   var username = $registerForm.find('[name="username"]').val();
+//   var password = $registerForm.find('[name="password"]').val();
+//
+//   var formData = {
+//     username: username,
+//     password: password
+//   }
+//
+//   $.post('/register', formData)
+//     .done(onLogin)
+//     .error(onError);
+// })

@@ -1,10 +1,11 @@
+<!-- Added the actions to the form so that you properly use the packages for mongoose-findorcreate and the local strategy. It might seem black box, but it just directly calls the route in your app.js backend and does the passport authentication -->
 <h1>Login</h1>
 <h3>Login with Facebook</h3>
 <form id="facebook-login" action="/auth/facebook">
     <input type="submit" value="Log in with Facebook" />
 </form>
 <h3>Login with Username</h3>
-<form id="local-login">
+<form id="local-login" action="/login" method="post" role="form">
 	username: <input type="text" name="username">
 	<br><br>
 	password: <input type="password" name="password">
@@ -12,7 +13,7 @@
 	<input type="submit" name="login" value="Login">
 </form>
 <h3>Register</h3>
-<form id="register">
+<form id="register" action="/register" method="post" role="form">
 	username: <input type="text" name="username">
 	<br><br>
 	password: <input type="password" name="password">

@@ -1,3 +1,4 @@
+//It would be good if you separated this file into multiple files, grouping similar routes (login-specific, tweet-specifc and user-specific). Also, I would have more comments regarding what you are doing in each route, as well as the different queries that you are using to do "what"
 var path = require('path');
 var User = require("../models/userModel");
 var Twote = require("../models/twoteModel");
@@ -41,7 +42,7 @@ routes.loginPage = function(req, res) {
 
 routes.newTwote = function(req, res) {
 	if (req.session.passport) {
-		Twote.create({username: req.session.passport.user.username, 
+		Twote.create({username: req.session.passport.user.username,
 			content: req.body.text, time: req.body.time}, function (err, twote) {
 			if (err) {
 				console.error(err);
@@ -99,19 +100,19 @@ routes.login = function (req, res) {
 	res.redirect('/');
 }
 
-routes.register = function (req, res) {
-	User.register(new User({username: req.body.username}), req.body.password, function(err, account) {
-		if (err) {
-			return res.render("login", {});
-		}
+// You have this in your app.js file, so you should remove it if it conflicts. Ideally, you would have kept this in this file:
 
-		passport.authenticate('login', function(req, res) {
-			console.log('redirecting');
-			res.redirect('/');
-		});
-	});
-}
+// routes.register = function (req, res) {
+// 	User.register(new User({username: req.body.username}), req.body.password, function(err, account) {
+// 		if (err) {
+// 			return res.render("login", {});
+// 		}
+//
+// 		passport.authenticate('local', function(req, res) {
+// 			console.log('redirecting');
+// 			res.redirect('/');
+// 		});
+// 	});
+// }
 
 module.exports = routes;
-
-

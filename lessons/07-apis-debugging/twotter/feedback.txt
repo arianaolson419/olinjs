@@ -1,0 +1,12 @@
+Homework Feedback:
+
+Functionality:
+- Completion: Facebook login, adding/deleting tweets, and the view of the twotter home page all works, and you have tests. Login and registration didn't work, but were attempted. Lastly, one part of the assignment was css, and I think you could have done a little more with the css, specifically the delete functionality (I wasn't sure what it was until I clicked it), and the first home page doesn't have a login link and you have to put '/login' into the route. (18/20)
+- Bug Free: I would definitely look at the changes that I made in your code to make the local strategy work. You had jquery form selectors that were overwritting the ability of the passport local login. The app didn't have login and register working, but everything seems bug free. Also, it's a good idea to remove your log statements when you are in production. (8/10)
+
+Quality:
+- Good Coding Practices: Good styling practices, in terms of spacing and the different jquery and functions that you make! (10/10)
+- Readability: Functions and variables are named well; however I would have a little more comments than you do have, just for readability. Also, separate sections and things into different files, as necessary. (8/10)
+
+
+Good work!!!!!! Definitely look over how the login and registration works.
