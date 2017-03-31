@@ -1,3 +1,5 @@
+// I would section out this file into different parts (your require parts, handlebars, your routes, your auth stuff). Also, it's useful to have router and api's hooked up in your app.js, but I think it's much more applicable for React.
+
 var express = require("express");
 var path = require("path");
 var logger = require("morgan");
@@ -15,6 +17,7 @@ var User = require("./models/userModel");
 
 mongoose.connect('mongodb://localhost/twotter');
 
+//Have your require files all at the top
 // file containing facebook authorization parameters
 var auth = require('./auth');
 // file containing routes
@@ -50,7 +53,7 @@ passport.use(new FacebookStrategy({
 passport.use(new LocalStrategy(User.authenticate()));
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(session({ 
+app.use(session({
   secret: 'this is not a secret ;)',
   resave: false,
   saveUninitialized: false
@@ -69,7 +72,7 @@ passport.deserializeUser(function(user, done) {
 // should only load twotes when logged in
 app.get("/", index.home);
 
-// logs in to Facebook
+// // logs in to Facebook
 app.get('/auth/facebook',
   passport.authenticate('facebook')
 );
@@ -91,13 +94,22 @@ app.get('/login', index.loginPage);
 app.post('/login', passport.authenticate('local'), index.login)
 
 app.post('/register', function (req, res) {
+  console.log("in registration process");
+
   User.register(new User({username: req.body.username}), req.body.password, function(err, account) {
+    console.log("in user creation");
     if (err) {
+      console.log("err");
       return res.render("login", {});
     }
 
-    passport.authenticate('login', function(req, res) {
-      res.redirect('/');
+    passport.authenticate('local')(req, res, () => {
+        req.session.save((err) => {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/');
+        });
     });
   });
 })

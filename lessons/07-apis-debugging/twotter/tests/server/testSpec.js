@@ -1,3 +1,4 @@
+// Nice clean testing file. I like your use of sinon spy. Maybe having more tests regarding the making and deleting of tweets.
 
 // Setup our assertion library
 var chai = require('chai')
